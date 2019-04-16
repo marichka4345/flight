@@ -1,0 +1,43 @@
+.flight {
+  width: 100%;
+  cursor: pointer;
+}
+
+.flight:nth-child(n) {
+  background: #e5eff3;
+}
+
+.flight:nth-child(2n) {
+  background: #fff;
+}
+
+.dataCell {
+  padding: 16px 10px;
+  vertical-align: middle;
+}
+
+.term {
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  color: #63c745;
+  border: 1px solid currentColor;
+  border-radius: 50%; 
+  font-weight: 700;
+  text-align: center;
+}
+
+.termText {
+  line-height: 27px;
+}
+
+.airlineLogo {
+  height: 30px;
+  max-width: 60px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.airlineName {
+  vertical-align: middle;
+}
