@@ -11,13 +11,15 @@ class FlighList extends Component {
   state = {flights: []};
 
   componentWillMount() {
+    const {flightType} = this.props;
+
     axios.get(`${FLIGHTS_API}/${getDateForApi()}`)
       .then(({data}) => {
         if (data.error.code !== 200) {
           throw Error('Something went wrong');
         }
 
-        const departureFlights = data.body.departure;
+        const departureFlights = data.body[flightType];
 
         this.setState({flights: this.getTodayUniqueFlights(departureFlights)});
       })

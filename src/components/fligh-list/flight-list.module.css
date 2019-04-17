@@ -4,9 +4,10 @@
 
 .header {
   width: 100%;
+  background: #ffffff;
   color: #95989a;
 }
 
 .headerCell {
-  padding: 0 0 18px 10px;
+  padding: 30px 0 18px 10px;
 }
