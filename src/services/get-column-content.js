@@ -7,7 +7,8 @@ export const getColumnContent = (type, props, styles) => {
   const {codeShareData} = props;
 
   switch (type) {
-    case 'timeDepShedule': {
+    case 'timeDepShedule': 
+    case 'timeArrShedule': {
       return formatDepartureTime(data);
     }
     case 'status': {
@@ -24,7 +25,7 @@ export const getColumnContent = (type, props, styles) => {
       return (
         <>
           {codeShareData.map(({airline}, key) => (
-            <div key={key} className={styles.airlineName}>{airline.en.name}</div>
+            <div key={key} className={styles.airlineName}>{airline ? airline.en.name : props['carrierID.code']}</div>
           ))}
         </>
       )

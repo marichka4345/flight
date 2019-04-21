@@ -1,4 +1,4 @@
-.tabNames {
+.root {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -8,40 +8,28 @@
   border-radius: 60px 60px 0 0;
 }
 
-.tab {
+.filter {
   width: 50%;
   padding: 20px;
   color: #ffffff;
   font-size: 24px;
+  font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.tab:first-child {
+.filter:first-child {
   padding-right: 100px;
   text-align: right;
 }
 
-.tab:nth-child(2) {
+.filter:nth-child(2) {
   padding-left: 100px;
 }
 
-.activeTab {
-  color: #73d2f0;
-  z-index: 2;
-}
-
-.slider {
-  position: absolute;
-  transform: translateX(0);
-  width: 50%;
-  height: 100%;
+.active {
   background: #ffffff;
+  color: #73d2f0;
   border-radius: 60px 60px 0 0;
-  transition: transform .3s ease-out; 
-  z-index: 1;
-}
-
-.movedSlider {
-  transform: translateX(100%);
+  transition: transform .3s ease-out;
 }

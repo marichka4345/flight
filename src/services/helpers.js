@@ -1,0 +1,1 @@
+export const compose = (a, b) => x => a(b(x));
