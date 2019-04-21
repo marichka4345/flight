@@ -1,0 +1,41 @@
+.root {
+  width: 50%;
+  margin: 20px auto 40px;
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 35px;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+}
+
+.input {
+  background: #fff;
+  padding: 32px 0 32px 80px;
+  font-size: 24px;
+  border: 0;
+}
+
+.button {
+  width: 200px;
+  padding: 0 35px 0 30px;
+  background: #1eb7ee;
+  color: #fff;
+  border: 0;
+  border-top-right-radius: 80px;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-radius .3s ease-in; 
+}
+
+.button:hover {
+  border-top-right-radius: 60px;
+}
