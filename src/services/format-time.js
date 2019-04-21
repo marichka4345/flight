@@ -1,6 +1,6 @@
 import {compose} from './helpers';
 
-const DAY_SECONDS = 86400000;
+const DAY_MILI_SECONDS = 86400000;
 
 const getDate = timestamp => new Date(timestamp);
 
@@ -31,6 +31,8 @@ export const formatFilterDate = compose(
   getDate
 );
 
-export const getTomorrowTimestamp = () => (Date.now() + DAY_SECONDS);
+export const getTomorrowTimestamp = () => (Date.now() + DAY_MILI_SECONDS);
 
-export const getYesterdayTimestamp = () => (Date.now() - DAY_SECONDS);
+export const getYesterdayTimestamp = () => (Date.now() - DAY_MILI_SECONDS);
+
+export const compareDates = (a, b) => new Date(a).getDate() - new Date(b).getDate();

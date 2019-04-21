@@ -3,3 +3,9 @@
   width: 85%;
   margin: auto;
 }
+
+@media only screen and (max-width: 750px) {
+  .root {
+    width: 100%;
+  }
+}

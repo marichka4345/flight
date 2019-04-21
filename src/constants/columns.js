@@ -1,23 +1,11 @@
-const COMMON_COLUMNS_CONFIG = {
+import {DESTINATION_FIELD_NAME, TIME_FIELD_NAME} from './flight-types';
+
+export const getColumnsConfig = flightType => ({
   term: 'Terminal',
   gateNo: 'Gate',
+  [TIME_FIELD_NAME[flightType]]: 'Local time',
   status: 'Status',
+  [DESTINATION_FIELD_NAME[flightType]]: 'Destination',
   airline: 'Airline',
   flight: 'Flight'
-};
-
-export const DEPPARTURE_COLUMNS_CONFIG = {
-  ...COMMON_COLUMNS_CONFIG,
-  timeDepShedule: 'Local time',
-  'airportToID.name_en': 'Destination',
-};
-
-export const ARRIVAL_COLUMNS_CONFIG = {
-  ...COMMON_COLUMNS_CONFIG,
-  timeArrShedule: 'Local time',
-  'airportFromID.name_en': 'Destination',
-};
-
-export const getColumnsConfig = flightType => flightType === 'arrival'
-  ? ARRIVAL_COLUMNS_CONFIG
-  : DEPPARTURE_COLUMNS_CONFIG;
+});

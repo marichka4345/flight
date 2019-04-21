@@ -14,6 +14,8 @@ export const getFlightStatus = (statusAbbreviation, additionalData) => {
       return `Departured at ${formatDepartureTime(additionalData.timeTakeofFact)}`;
     case 'FR':
       return 'In flight';
+    case 'GC':
+      return 'Gate closed';
     case 'LN':
       return `Landed ${formatDepartureTime(additionalData.timeLandFact)}`;
     case 'ON':

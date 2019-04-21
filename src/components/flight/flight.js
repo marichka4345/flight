@@ -1,5 +1,7 @@
 import React from 'react';
 import {getColumnContent} from '../../services/get-column-content';
+import {FLIGHT_TYPE} from '../../constants/flight-types';
+import {notifyMe} from '../../services/notification';
 import styles from './flight.module.css';
 
 const Flight = props => (
@@ -11,6 +13,10 @@ const Flight = props => (
         </td>
       ))
     }
+    <td className={styles.taxiNotify}>{
+      props.flightType === FLIGHT_TYPE.DEPARTURE
+      && <span onClick={() => notifyMe(props)}>Notify</span>
+    }</td>
   </tr>
 );
 

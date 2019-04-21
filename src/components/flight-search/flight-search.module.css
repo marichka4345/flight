@@ -1,41 +1,80 @@
 .root {
-  width: 50%;
+  width: 65%;
   margin: 20px auto 40px;
 }
 
 .title {
   width: 100%;
   margin-bottom: 35px;
-  font-size: 30px;
+  font-size: 70px;
+  font-weight: 300;
   text-transform: uppercase;
 }
 
 .form {
-  width: 100%;
   display: flex;
+  width: 100%;
+  height: 80px;
 }
 
 .input {
+  flex-grow: 1;
   background: #fff;
-  padding: 32px 0 32px 80px;
+  padding-left: 80px;
   font-size: 24px;
   border: 0;
+  outline: none;
 }
 
 .button {
   width: 200px;
-  padding: 0 35px 0 30px;
+  padding-right: 35px;
   background: #1eb7ee;
   color: #fff;
   border: 0;
-  border-top-right-radius: 80px;
+  border-top-right-radius: 90px;
   font-size: 24px;
   font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
   transition: border-radius .3s ease-in; 
+  outline: none;
 }
 
 .button:hover {
-  border-top-right-radius: 60px;
+  border-top-right-radius: 40px;
+}
+
+@media only screen and (max-width: 990px) {
+  .root {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 50px;
+  }
+
+  .input {
+    font-size: 18px;
+    padding-left: 10px;
+  }
+
+  .button {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .root {
+    width: 100%;
+  }
+
+  .button {
+    width: 100px;
+    padding: 0;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 300;
+    border-top-right-radius: 40px;
+  }
 }

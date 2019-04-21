@@ -4,102 +4,72 @@ import DateFilterList from './date-filter-list/date-filter-list';
 import TypeFilterList from './type-filter-list/type-filter-list';
 import {getDateForApi} from '../services/format-time';
 import FlightSearch from './flight-search/flight-search';
-import {getTodayUniqueFlights} from '../services/flight';
+import {getTodayUniqueFlights, concatanateSearchResults} from '../services/flight';
+import {FLIGHTS_API} from '../constants/api-urls';
+import {FLIGHT_TYPE} from '../constants/flight-types';
 import styles from './App.module.css';
-
-const FLIGHTS_API = 'https://api.iev.aero/api/flights';
 
 class App extends Component {
 
   state = {
-    flightType: 'departure',
+    flightType: FLIGHT_TYPE.DEPARTURE,
     flightDate: Date.now(),
     searchField: '',
     searchResults: [],
     flights: []
   }
 
-  componentWillMount() {
-    const {flightType, flightDate} = this.state;
-    const flights = this.fetchFlights(flightType, flightDate);
+  async componentDidMount() {
+    const {flights, searchResults} = await this.fetch(this.state);
 
     this.setState({
       flights,
-      searchResults: flights
+      searchResults
     });
   }
 
-  fetchFlights = (flightType, date) => {
-    const flightDate = getDateForApi(date);
+  fetch = async ({flightType: changedFlightType, flightDate: changedDate}) => {
+    const flightDate = changedDate || this.state.flightDate;
+    const formattedFlightDate = getDateForApi(flightDate);
 
-    fetch(`${FLIGHTS_API}/${flightDate}`)
-      .then(response => response.json())
-      .then(response => {
-        if (response.error.code !== 200) {
-          throw Error('Something went wrong');
-        }
+    const flightType = changedFlightType || this.state.flightType;
 
-        const flights = getTodayUniqueFlights(response.body[flightType], date);
-        this.setState(({searchField}) => ({
-          flights,
-          searchResults: this.getSearchResults(searchField, flights),
-          flightType,
-          flightDate: date
-        }));
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+    try {
+      const {body, error} = await fetch(`${FLIGHTS_API}/${formattedFlightDate}`)
+        .then(response => response.json());
 
-  changeFlightType = flightType => {
-    this.fetchFlights(flightType, this.state.flightDate);
-  };
-
-  changeFlightDate = flightDate => {
-    this.fetchFlights(this.state.flightType, flightDate);
-  };
-
-  searchByFlightNo = (searchField, flights) => {
-    return flights.filter(flight => 
-      flight.codeShareData.some(item => item.codeShare.indexOf(searchField) === 0)
-    );
-  }
-
-  searchByDestination = (searchField, flights) => {
-    const {flightType} = this.state;
-    const fieldName = flightType === 'arrival' ? 'airportFromID.name_en' : 'airportToID.name_en';
-    return flights.filter(flight => 
-      flight[fieldName].indexOf(searchField) === 0
-    );
-  }
-
-  concatanateSearchResults = (...args) => {
-    const flightNoResults = this.searchByFlightNo(...args);
-    const destinationResults = this.searchByDestination(...args);
-    const isDuplicated = flight => flightNoResults.find(item => item.ID = flight.ID);
-
-    const modifiedDestinationResults = destinationResults.reduce((res, flight) => {
-      if (isDuplicated(flight)) {
-        return res;
+      if (error.code !== 200) {
+        throw Error('Something went wrong');
       }
 
-      return [...res, flight];
-    }, []);
-
-    return [...flightNoResults, ...modifiedDestinationResults];
-  }
+      const flights = getTodayUniqueFlights(body[flightType], flightDate);
+      return {
+        flights,
+        searchResults: this.getSearchResults(this.state.searchField, flights, flightType),
+        flightType,
+        flightDate
+      };  
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   searchFlight = searchField => {
-    this.setState(({flights}) => ({
+    this.setState(({flights, flightType}) => ({
       searchField,
-      searchResults: this.getSearchResults(searchField, flights)
+      searchResults: this.getSearchResults(searchField, flights, flightType)
     }));
   };
 
-  getSearchResults = (searchField, flights = []) => searchField === ''
-    ? flights
-    : this.concatanateSearchResults(searchField, flights);
+  getSearchResults = (searchField, flights, flightType) =>
+    searchField === ''
+      ? flights
+      : concatanateSearchResults(searchField, flights, flightType);
+
+  changeDataAfterFilter = async changedData => {
+    const state = await this.fetch(changedData);
+    this.setState(state);
+  };
 
   render() {
     const {flightType, flightDate, searchResults} = this.state;
@@ -107,8 +77,15 @@ class App extends Component {
     return (
       <div className={styles.root}>
         <FlightSearch search={this.searchFlight} />
-        <TypeFilterList change={this.changeFlightType} active={flightType} />
-        <DateFilterList change={this.changeFlightDate} active={flightDate} />
+
+        <TypeFilterList
+          change={this.changeDataAfterFilter}
+          active={flightType}
+        />
+        <DateFilterList
+          change={this.changeDataAfterFilter}
+          active={flightDate}
+        />
 
         <FlightList flightType={flightType} flights={searchResults} />
       </div>

@@ -33,3 +33,24 @@
   border-radius: 60px 60px 0 0;
   transition: transform .3s ease-out;
 }
+
+@media only screen and (max-width: 750px) {
+  .filter {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .filter {
+    text-align: center;
+  }
+
+  .filter:first-child {
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .filter:nth-child(2) {
+    padding-left: 0;
+  }
+}

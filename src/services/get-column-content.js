@@ -1,19 +1,22 @@
 import React from 'react';
 import {formatDepartureTime} from './format-time';
 import {getFlightStatus} from './get-flight-status';
+import {FLIGHT_TYPE, TIME_FIELD_NAME} from '../constants/flight-types';
 
 export const getColumnContent = (type, props, styles) => {
   const data = props[type];
   const {codeShareData} = props;
 
   switch (type) {
-    case 'timeDepShedule': 
-    case 'timeArrShedule': {
+    case TIME_FIELD_NAME[FLIGHT_TYPE.DEPARTURE]: 
+    case TIME_FIELD_NAME[FLIGHT_TYPE.ARRIVAL]: {
       return formatDepartureTime(data);
     }
+
     case 'status': {
       return getFlightStatus(data, props);
     }
+
     case 'term': {
       return (
         <div className={styles.term}>
@@ -21,15 +24,22 @@ export const getColumnContent = (type, props, styles) => {
         </div>
       );
     }
+
     case 'airline': {
       return (
         <>
           {codeShareData.map(({airline}, key) => (
-            <div key={key} className={styles.airlineName}>{airline ? airline.en.name : props['carrierID.code']}</div>
+            <div
+              key={key}
+              className={styles.airlineName}
+            >
+              {airline ? airline.en.name : props['carrierID.code']}
+            </div>
           ))}
         </>
-      )
+      );
     }
+
     case 'flight': {
       return (
         <>
@@ -41,8 +51,9 @@ export const getColumnContent = (type, props, styles) => {
         </>
       );
     }
+    
     default: {
-      return data || '';
+      return <span className={`${styles[type]}`}>{data || ''}</span>;
     }
   }
 };

@@ -1,0 +1,1 @@
+export const FLIGHTS_API = 'https://api.iev.aero/api/flights';

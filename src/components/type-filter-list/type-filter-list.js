@@ -1,22 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {FLIGHT_TYPE} from '../../constants/flight-types';
 import styles from './type-filter-list.module.css';
 
-const FILTERS = [{key: 'departure', title: 'Departures'}, {key: 'arrival', title: 'Arrivals'}];
+const FILTERS = [
+  {key: FLIGHT_TYPE.DEPARTURE, title: 'Departures'},
+  {key: FLIGHT_TYPE.ARRIVAL, title: 'Arrivals'}
+];
 
-class TypeFilterList extends Component {
-  render() {
-    const {change, active} = this.props;
-
-    return (
-      <div className={styles.root}>
-        {FILTERS.map(({key, title}) => (
-          <div onClick={() => change(key)} className={`${styles.filter} ${active === key ? styles.active : ''}`}>
-            {title}
-          </div>
-        ))}
+const TypeFilterList = ({change, active}) => (
+  <div className={styles.root}>
+    {FILTERS.map(({ key, title }) => (
+      <div
+        key={key}
+        onClick={() => change({flightType: key})}
+        className={`${styles.filter} ${active === key ? styles.active : ''}`}
+      >
+        {title}
       </div>
-    );
-  }
-}
+    ))}
+  </div>
+);
 
 export default TypeFilterList;

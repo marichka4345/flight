@@ -41,3 +41,21 @@
 .airlineName {
   vertical-align: middle;
 }
+
+.taxiNotify {
+  padding-right: 10px; 
+  vertical-align: middle;
+  color: #20639b;
+}
+
+@media only screen and (max-width: 650px) {
+  .flight {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .term, .gateNo {
+    display: none;
+    padding: 0;
+  }
+}

@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {
     formatFilterDate,
     getYesterdayTimestamp,
@@ -21,22 +21,23 @@ const FILTERS = [
   }
 ];
 
-class DateFilterList extends PureComponent  {
-  
-  render() {
-    const {active, change} = this.props;
-    
-    return (
-      <div className={styles.root}>
-        {FILTERS.map(({title, date}) => (
-          <div onClick={() => {change(date)}} className={`${styles.filter} ${new Date(active).getDate() === new Date(date).getDate() ? styles.active : ''}`}>
-            <span className={styles.date}>{formatFilterDate(date)}</span>
-            <span className={styles.title}>{title}</span>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
+const DateFilterList = ({active, change}) => {
+  const isActive = date => new Date(active).getDate() === new Date(date).getDate();
+
+  return (
+    <div className={styles.root}>
+      {FILTERS.map(({title, date}) => (
+        <div
+          key={date}
+          onClick={() => {change({flightDate: date})}}
+          className={`${styles.filter} ${isActive(date) ? styles.active : ''}`}
+        >
+          <span className={styles.date}>{formatFilterDate(date)}</span>
+          <span className={styles.title}>{title}</span>
+        </div>
+      ))}
+    </div>
+  )
+};
 
 export default DateFilterList;
